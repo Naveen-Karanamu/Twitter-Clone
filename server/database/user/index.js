@@ -13,7 +13,7 @@ const UserSchema = new mongoose.Schema({
     });
 
 UserSchema.methods.generateJWT = function () {
-    return jwt.sign({ user: this._id.toString() }, "user");
+    return jwt.sign({ user: this._id.toString() }, "twitter");
 }
 
 UserSchema.statics.findByEmail = async ({ email }) => {

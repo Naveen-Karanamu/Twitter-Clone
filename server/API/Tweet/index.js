@@ -34,7 +34,6 @@ router.get(
   }
 );
 
-
 /*
 Route: /tweet/new
 Description: Creete a new tweet
@@ -42,7 +41,7 @@ params: NONE
 Access: Public
 Method: POST
 */
-router.post('/new', async (req, res) => {
+router.post("/new", async (req, res) => {
   try {
     const { content, user } = req.body;
     const tweet = new TweetModel({ content, user });
@@ -50,7 +49,7 @@ router.post('/new', async (req, res) => {
     res.status(201).json(tweet);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
@@ -61,13 +60,13 @@ params: NONE
 Access: Public
 Method: GET
 */
-router.get('/getall', async (req, res) => {
+router.get("/getall", async (req, res) => {
   try {
     const tweets = await TweetModel.find().sort({ createdAt: -1 });
     res.status(200).json(tweets);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
@@ -78,17 +77,17 @@ params: NONE
 Access: Public
 Method: GET
 */
-router.get('/get/:tweetId', async (req, res) => {
+router.get("/get/:tweetId", async (req, res) => {
   try {
     const tweet = await TweetModel.findById(req.params.tweetId);
     if (!tweet) {
-      res.status(404).json({ error: 'Tweet not found' });
+      res.status(404).json({ error: "Tweet not found" });
       return;
     }
     res.status(200).json(tweet);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
@@ -99,7 +98,7 @@ params: NONE
 Access: Public
 Method: PUL
 */
-router.put('/update/:tweetId', async (req, res) => {
+router.put("/update/:tweetId", async (req, res) => {
   try {
     const { content } = req.body;
     const tweet = await TweetModel.findByIdAndUpdate(
@@ -108,13 +107,13 @@ router.put('/update/:tweetId', async (req, res) => {
       { new: true }
     );
     if (!tweet) {
-      res.status(404).json({ error: 'Tweet not found' });
+      res.status(404).json({ error: "Tweet not found" });
       return;
     }
     res.status(200).json(tweet);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
@@ -125,20 +124,18 @@ params: NONE
 Access: Public
 Method: Delete
 */
-router.delete('/delete/:tweetId', async (req, res) => {
+router.delete("/delete/:tweetId", async (req, res) => {
   try {
     const tweet = await TweetModel.findByIdAndDelete(req.params.tweetId);
     if (!tweet) {
-      res.status(404).json({ error: 'Tweet not found' });
+      res.status(404).json({ error: "Tweet not found" });
       return;
     }
-    res.status(204).end(); 
+    res.status(204).end();
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
-
 
 export default router;

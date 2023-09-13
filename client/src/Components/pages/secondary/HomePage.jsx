@@ -7,22 +7,30 @@ import { getUserInfo } from "../../../Redux/Reducer/User/user.action";
 const HomePage = () => {
   const dispatch = useDispatch();
   const tweetsFromState = useSelector((state) => state.tweets);
-  const [tweets, setTweets] = useState(null);
-  const [userInfo, setUserInfo] = useState(null);
+  const [tweets, setTweets] = useState([]);
+  const [userInfoMap, setUserInfoMap] = useState({});
 
   // useEffect to fetch tweets and user info
   useEffect(() => {
     const fetchTweetsAndUserInfo = async () => {
       try {
         const tweetsData = await dispatch(getAllTweets());
-        setTweets(tweetsData || []);
 
-        // Fetch user information using ObjectId (assuming _id is the ObjectId)
-        if (tweetsData[0]?.user) {
-          const userId = tweetsData[0].user;
-          const userInfoResponse = await dispatch(getUserInfo(userId));
-          setUserInfo(userInfoResponse);
+        // Create an object to store user info based on user IDs
+        const userInfoObject = {};
+
+        // Fetch user information for each user in tweetsData
+        for (const tweet of tweetsData) {
+          if (tweet.user) {
+            const userId = tweet.user;
+            const userInfoResponse = await dispatch(getUserInfo(userId));
+            userInfoObject[userId] = userInfoResponse;
+          }
         }
+
+        // Update state with the tweets and user information
+        setTweets(tweetsData);
+        setUserInfoMap(userInfoObject);
       } catch (error) {
         console.error("Error fetching tweets:", error);
         console.error("Error response:", error.response);
@@ -39,15 +47,14 @@ const HomePage = () => {
           <p className="text-bold text-xl">Posts</p>
           <p className="text-bold text-xl">Following</p>
         </div>
-        {tweets !== null &&
-          tweets.map((tweet) => (
-            <TweetComponent
-              key={tweet.id}
-              username={userInfo ? userInfo.username : ""}
-              fullname={userInfo ? userInfo.fullname : ""}
-              content={tweet.content}
-            />
-          ))}
+        {tweets.map((tweet) => (
+          <TweetComponent
+            key={tweet.id}
+            username={userInfoMap[tweet.user]?.username || ""}
+            fullname={userInfoMap[tweet.user]?.fullname || ""}
+            content={tweet.content}
+          />
+        ))}
       </div>
     </>
   );

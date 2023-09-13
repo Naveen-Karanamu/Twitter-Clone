@@ -45,7 +45,7 @@ Method: POST
 router.post('/new', async (req, res) => {
   try {
     const { content, user } = req.body;
-    const tweet = new Tweet({ content, user });
+    const tweet = new TweetModel({ content, user });
     await tweet.save();
     res.status(201).json(tweet);
   } catch (error) {
@@ -63,7 +63,7 @@ Method: GET
 */
 router.get('/getall', async (req, res) => {
   try {
-    const tweets = await Tweet.find().sort({ createdAt: -1 });
+    const tweets = await TweetModel.find().sort({ createdAt: -1 });
     res.status(200).json(tweets);
   } catch (error) {
     console.error(error);
@@ -80,7 +80,7 @@ Method: GET
 */
 router.get('/get/:tweetId', async (req, res) => {
   try {
-    const tweet = await Tweet.findById(req.params.tweetId);
+    const tweet = await TweetModel.findById(req.params.tweetId);
     if (!tweet) {
       res.status(404).json({ error: 'Tweet not found' });
       return;
@@ -102,7 +102,7 @@ Method: PUL
 router.put('/update/:tweetId', async (req, res) => {
   try {
     const { content } = req.body;
-    const tweet = await Tweet.findByIdAndUpdate(
+    const tweet = await TweetModel.findByIdAndUpdate(
       req.params.tweetId,
       { content },
       { new: true }
@@ -127,7 +127,7 @@ Method: Delete
 */
 router.delete('/delete/:tweetId', async (req, res) => {
   try {
-    const tweet = await Tweet.findByIdAndDelete(req.params.tweetId);
+    const tweet = await TweetModel.findByIdAndDelete(req.params.tweetId);
     if (!tweet) {
       res.status(404).json({ error: 'Tweet not found' });
       return;

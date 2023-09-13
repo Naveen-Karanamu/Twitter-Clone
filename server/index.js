@@ -5,7 +5,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import passport from "passport";
-// import session from "express-session";
+import session from "express-session";
 // import session from "cookie-session"
 
 import routeConfig from './config/route.config.js';
@@ -21,11 +21,11 @@ const app = express();
 const PORT=process.env.PORT || 3001
 
 // Session config
-// app.use(session({
-//     resave: false,
-//     saveUninitialized: true,
-//     secret: 'Session started'
-//   }));
+app.use(session({
+    resave: false,
+    saveUninitialized: true,
+    secret: 'Session started'
+  }));
 
 
 // Middlewares

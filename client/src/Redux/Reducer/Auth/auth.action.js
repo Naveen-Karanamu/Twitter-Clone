@@ -7,7 +7,8 @@ export const signIn = (userData) => async (dispatch) => {
   try {
     const User = await axios({
       method: "POST",
-      url: `http://localhost:3001/auth/signin`,
+      // url: `http://localhost:3001/auth/signin`,
+      url: `https://twitter-clone-be.vercel.app/auth/signin`,
       data: { credentials: userData },
     });
 
@@ -27,7 +28,8 @@ export const signUp = (userData) => async (dispatch) => {
   try {
     const User = await axios({
       method: "POST",
-      url: `http://localhost:3001/auth/signup`,
+      // url: `http://localhost:3001/auth/signup`,
+      url: `https://twitter-clone-be.vercel.app/auth/signin`,
       data: { credentials: userData },
     });
 

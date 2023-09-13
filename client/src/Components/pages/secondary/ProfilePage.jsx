@@ -220,6 +220,7 @@ const ProfilePage = () => {
                   fullname={userInfo ? userInfo.fullname : ""}
                   content={editMode ? editedContent : tweet.content}
                   onUpdate={() => handleUpdateClick(tweet.id)}
+                  isProfilePage={true}
                 >
                   {editMode ? (
                     <>

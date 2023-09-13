@@ -17,6 +17,7 @@ export const signIn = (userData) => async (dispatch) => {
       // url: `https://twitter-clone-be.vercel.app/auth/signin`,
       data: { credentials: userData },
     });
+    console.log(User.data.userId);
 
     localStorage.setItem("user", JSON.stringify({ token: User.data.token }));
 

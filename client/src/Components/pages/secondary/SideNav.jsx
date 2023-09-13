@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ImHome3 } from "react-icons/im";
 import { FaUserAlt } from "react-icons/fa";
-
 import tx_image from "../../../assets/images/tx.png";
+import TweetCard from "../TweetCard"; // Import the TweetCard component
 
 const SideNav = () => {
   // State to track the selected page
   const [selectedPage, setSelectedPage] = useState("home");
+  // State to control the visibility of the TweetCard
+  const [isTweetCardOpen, setIsTweetCardOpen] = useState(false);
 
   // Function to handle the click on the Home link
   const handleHomeClick = () => {
@@ -17,6 +19,11 @@ const SideNav = () => {
   // Function to handle the click on the Profile link
   const handleProfileClick = () => {
     setSelectedPage("profile");
+  };
+
+  // Function to open the TweetCard
+  const openTweetCard = () => {
+    setIsTweetCardOpen(true);
   };
 
   return (
@@ -36,7 +43,7 @@ const SideNav = () => {
         >
           <div className="flex gap-4 justify-center items-center hover:bg-gray-300 rounded-3xl px-6 py-3">
             <ImHome3 className="w-6 h-6" />
-            <p className="font-semibold text-xl ">Home</p>
+            <p className="font-semibold text-xl">Home</p>
           </div>
         </Link>
         <Link
@@ -50,15 +57,22 @@ const SideNav = () => {
         >
           <div className="flex gap-4 justify-center items-center hover:bg-gray-300 rounded-3xl px-6 py-3">
             <FaUserAlt className="w-6 h-6" />
-            <p className="font-semibold text-xl ">Profile</p>
+            <p className="font-semibold text-xl">Profile</p>
           </div>
         </Link>
         <div>
-          <button className="bg-blueT-100 hover:bg-blue-700 px-20 py-2 rounded-3xl mt-4 text-white font-bold text-lg">
-            Post
+          <button
+            onClick={openTweetCard} // Open the TweetCard when this button is clicked
+            className="bg-blueT-100 hover:bg-blue-700 px-20 py-2 rounded-3xl mt-4 text-white font-bold text-lg"
+          >
+            Tweet
           </button>
         </div>
       </div>
+      {/* Render the TweetCard component if isTweetCardOpen is true */}
+      {isTweetCardOpen && (
+        <TweetCard isOpen={isTweetCardOpen} setIsOpen={setIsTweetCardOpen} />
+      )}
     </>
   );
 };

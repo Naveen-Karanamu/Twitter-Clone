@@ -4,7 +4,15 @@ import { AiOutlineRetweet, AiOutlineHeart } from "react-icons/ai";
 import { BiPoll } from "react-icons/bi";
 import { FaUserCircle } from "react-icons/fa";
 
-const TweetComponent = ({ username, content, onEdit, onDelete, onUpdate, fullname }) => {
+const TweetComponent = ({
+  username,
+  content,
+  onEdit,
+  onDelete,
+  onUpdate,
+  fullname,
+  isProfilePage = false, // Default to false for HomePage
+}) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(content);
 
@@ -27,7 +35,7 @@ const TweetComponent = ({ username, content, onEdit, onDelete, onUpdate, fullnam
       <div className="w-96 py-2 border-y-2">
         <div className="flex gap-2 justify-start items-center">
           <FaUserCircle className="w-8 h-8 text-blueT-100" />
-          <p>{fullname}</p> <p>@{username}</p>
+          <p className="text-lg">{fullname}</p> <p>@{username}</p>
         </div>
         {isEditing ? (
           <textarea
@@ -43,17 +51,19 @@ const TweetComponent = ({ username, content, onEdit, onDelete, onUpdate, fullnam
           <AiOutlineRetweet />
           <AiOutlineHeart />
           <BiPoll />
-          {isEditing ? (
-            <>
-              <button onClick={handleCancelClick}>Cancel</button>
-              <button onClick={handleUpdateClick}>Update</button>
-            </>
-          ) : (
-            <>
-              <button onClick={handleEditClick}>Edit</button>
-              <button onClick={onDelete}>Delete</button>
-            </>
-          )}
+          {isProfilePage ? ( // Check if it's the ProfilePage
+            isEditing ? (
+              <>
+                <button onClick={handleCancelClick}>Cancel</button>
+                <button onClick={handleUpdateClick}>Update</button>
+              </>
+            ) : (
+              <>
+                <button onClick={handleEditClick}>Edit</button>
+                <button onClick={onDelete}>Delete</button>
+              </>
+            )
+          ) : null /* Don't render the buttons in HomePage */}
         </div>
       </div>
     </>

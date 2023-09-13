@@ -1,10 +1,16 @@
 import axios from "axios";
 
 // Redus types
-import { SIGN_IN, SIGN_UP } from "./auth.type";
+import {
+  SIGN_IN,
+  SIGN_UP,
+  SIGN_IN_REQUEST,
+  SIGN_UP_REQUEST,
+} from "./auth.type";
 
 export const signIn = (userData) => async (dispatch) => {
   try {
+    dispatch({ type: SIGN_IN_REQUEST });
     const User = await axios({
       method: "POST",
       url: `http://localhost:3001/auth/signin`,
@@ -26,6 +32,7 @@ export const signIn = (userData) => async (dispatch) => {
 
 export const signUp = (userData) => async (dispatch) => {
   try {
+    dispatch({ type: SIGN_UP_REQUEST });
     const User = await axios({
       method: "POST",
       url: `http://localhost:3001/auth/signup`,

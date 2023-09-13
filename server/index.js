@@ -16,6 +16,7 @@ import ConnectDB from "./database/connection.js";
 // Microservice Routs
 import Auth from "./API/Auth/index.js"
 import Tweet from "./API/Tweet/index.js"
+import User from "./API/User/index.js"
 
 const app = express();
 const PORT=process.env.PORT || 3001
@@ -40,6 +41,7 @@ routeConfig(passport);
 // App Routes
 app.use("/auth", Auth);
 app.use("/tweet", Tweet);
+app.use("/user", User);
 
 app.get("/", (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');

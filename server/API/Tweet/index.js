@@ -35,6 +35,28 @@ router.get(
 );
 
 /*
+Route: /tweet/user/:userId
+Description: Get tweets posted by a specific user
+params: userId (User's ID)
+Access: Public
+Method: GET
+*/
+router.get("/user/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    const tweetsByUser = await TweetModel.find({ user: userId }).sort({
+      createdAt: -1,
+    });
+
+    res.status(200).json(tweetsByUser);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+/*
 Route: /tweet/new
 Description: Creete a new tweet
 params: NONE

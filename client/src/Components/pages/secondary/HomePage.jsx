@@ -39,6 +39,7 @@ const HomePage = () => {
 
     fetchTweetsAndUserInfo();
   }, [dispatch, tweetsFromState]);
+  // console.log(tweets[0].createdAt);
 
   return (
     <>
@@ -53,6 +54,7 @@ const HomePage = () => {
             username={userInfoMap[tweet.user]?.username || ""}
             fullname={userInfoMap[tweet.user]?.fullname || ""}
             content={tweet.content}
+            createdAt={tweet.createdAt}
           />
         ))}
       </div>

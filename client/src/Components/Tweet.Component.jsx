@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaRegComment } from "react-icons/fa";
 import { AiOutlineRetweet, AiOutlineHeart } from "react-icons/ai";
 import { BiPoll } from "react-icons/bi";
@@ -11,10 +11,31 @@ const TweetComponent = ({
   onDelete,
   onUpdate,
   fullname,
-  isProfilePage = false, // Default to false for HomePage
+  isProfilePage = false,
+  createdAt,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(content);
+  const [timeAgo, setTimeAgo] = useState("");
+
+  useEffect(() => {
+    const createdDate = new Date(createdAt);
+    const currentDate = new Date();
+    const timeDiffInMilliseconds = currentDate - createdDate;
+
+    if (timeDiffInMilliseconds < 60 * 60 * 1000) {
+      const minutes = Math.floor(timeDiffInMilliseconds / (60 * 1000));
+      const formattedTimeAgo = `${minutes} minutes ago`;
+      setTimeAgo(formattedTimeAgo);
+    } else if (timeDiffInMilliseconds < 24 * 60 * 60 * 1000) {
+      const hours = Math.floor(timeDiffInMilliseconds / (60 * 60 * 1000));
+      const formattedTimeAgo = `${hours} hours ago`;
+      setTimeAgo(formattedTimeAgo);
+    } else {
+      const hours = Math.floor(timeDiffInMilliseconds / (60 * 60 * 1000));
+      setTimeAgo(`${hours} Hours`);
+    }
+  }, [createdAt]);
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -22,7 +43,7 @@ const TweetComponent = ({
 
   const handleCancelClick = () => {
     setIsEditing(false);
-    setEditedContent(content); // Reset to original content
+    setEditedContent(content);
   };
 
   const handleUpdateClick = () => {
@@ -33,9 +54,14 @@ const TweetComponent = ({
   return (
     <>
       <div className="w-96 py-2 border-y-2">
-        <div className="flex gap-2 justify-start items-center">
-          <FaUserCircle className="w-8 h-8 text-blueT-100" />
-          <p className="text-lg">{fullname}</p> <p>@{username}</p>
+        <div className="flex justify-between flex-row-reverse items-center">
+          <div>
+            <p className="text-xs font-semibold">{timeAgo}</p>
+          </div>
+          <div className="flex gap-2 justify-start items-center">
+            <FaUserCircle className="w-8 h-8 text-blueT-100" />
+            <p className="text-lg">{fullname}</p> <p>@{username}</p>
+          </div>
         </div>
         {isEditing ? (
           <textarea
@@ -51,7 +77,7 @@ const TweetComponent = ({
           <AiOutlineRetweet />
           <AiOutlineHeart />
           <BiPoll />
-          {isProfilePage ? ( // Check if it's the ProfilePage
+          {isProfilePage ? (
             isEditing ? (
               <>
                 <button onClick={handleCancelClick}>Cancel</button>
@@ -63,7 +89,7 @@ const TweetComponent = ({
                 <button onClick={onDelete}>Delete</button>
               </>
             )
-          ) : null /* Don't render the buttons in HomePage */}
+          ) : null}
         </div>
       </div>
     </>

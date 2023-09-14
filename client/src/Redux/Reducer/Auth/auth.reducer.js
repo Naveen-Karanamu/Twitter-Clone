@@ -1,10 +1,19 @@
 import { SIGN_IN, SIGN_UP, LOGOUT } from "./auth.type";
 
 const INITIAL_STATE = {
-  user: "650155b70a5ad9b9d13658dd",
   loading: false,
   error: null,
   status: null,
+  user: {
+    _id: "650155b70a5ad9b9d13658dd" ,
+    username: "naveen",
+    fullname: "naveen",
+    email: "naveen@gmail.com",
+    createdAt: { $date: { $numberLong: "1694586295604" } },
+    updatedAt: { $date: { $numberLong: "1694689117816" } },
+    following: [],
+    tweets: [],
+  },
 };
 
 const authReducer = (state = INITIAL_STATE, action) => {
@@ -17,7 +26,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
       return { ...state, user: action.payload, isLoggedIn: true };
     case SIGN_IN:
       console.log(action.payload);
-      return { ...state, user: 2, isLoggedIn: true };
+      return { ...state, user: action.payload, isLoggedIn: true };
     case LOGOUT:
       return { ...state, user: null, status: null };
 

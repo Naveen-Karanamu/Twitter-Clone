@@ -14,7 +14,7 @@ const UserSchema = new mongoose.Schema(
         timestamp: { type: Date, default: Date.now },
       },
     ],
-    followers: [
+    following: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Users",
@@ -36,8 +36,8 @@ UserSchema.methods.addTweet = function (tweetContent) {
 };
 
 UserSchema.methods.addFollower = function (followerId) {
-  if (!this.followers.includes(followerId)) {
-    this.followers.push(followerId);
+  if (!this.following.includes(followerId)) {
+    this.following.push(followerId);
   }
   return this.save();
 };

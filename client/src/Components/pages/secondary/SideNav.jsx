@@ -35,7 +35,7 @@ const SideNav = () => {
 
   return (
     <>
-      <div className="flex flex-col w-1/5 gap-1 justify-start items-start mx-6 mt-4 border-r-2 h-screen">
+      <div className="flex flex-col px-10 gap-1 justify-start items-start mx-6 mt-4 border-r-2 h-screen">
         <div className="w-14 h-14">
           <img src={tx_image} alt="logo" />
         </div>

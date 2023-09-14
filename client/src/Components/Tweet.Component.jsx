@@ -25,7 +25,7 @@ const TweetComponent = ({
   onDeleteTweet,
 }) => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.authReducer.user);
+  const user = useSelector((state) => state.authReducer.user._id);
   const [isEditing, setIsEditing] = useState(false);
   const [tweets, setTweets] = useState(null);
 

@@ -3,8 +3,12 @@ import {
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
   GET_USER_FAILURE,
-  FOLLOW_USER,
-  UNFOLLOW_USER,
+  FOLLOW_USER_REQUEST,
+  FOLLOW_USER_SUCCESS,
+  FOLLOW_USER_FAILURE,
+  UNFOLLOW_USER_REQUEST,
+  UNFOLLOW_USER_SUCCESS,
+  UNFOLLOW_USER_FAILURE,
   FETCH_USERS_REQUEST,
   FETCH_USERS_SUCCESS,
   FETCH_USERS_FAILURE,
@@ -52,12 +56,76 @@ export const fetchUsersFailure = (error) => ({
   payload: error,
 });
 
-export const followUser = (userId) => ({
-  type: FOLLOW_USER,
+export const fetchUsers = () => {
+  return async (dispatch) => {
+    dispatch(fetchUsersRequest());
+
+    try {
+      const response = await fetch('http://localhost:3001/user/getall');
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const users = await response.json();
+      dispatch(fetchUsersSuccess(users));
+    } catch (error) {
+      dispatch(fetchUsersFailure(error.message));
+    }
+  };
+};
+
+export const followUserRequest = () => ({
+  type: FOLLOW_USER_REQUEST,
+});
+
+export const followUserSuccess = (userId) => ({
+  type: FOLLOW_USER_SUCCESS,
   payload: userId,
 });
 
-export const unfollowUser = (userId) => ({
-  type: UNFOLLOW_USER,
+export const followUserFailure = (error) => ({
+  type: FOLLOW_USER_FAILURE,
+  payload: error,
+});
+
+export const followUser = (userId) => async (dispatch, getState) => {
+  const currentUser = getState().authReducer.user;
+  const currentUserId = currentUser._id;
+
+  dispatch(followUserRequest());
+
+  try {
+    await axios.post(`http://localhost:3001/user/follow/${userId}`, {
+      user: currentUser,
+    });
+
+    dispatch(followUserSuccess(userId));
+  } catch (error) {
+    dispatch(followUserFailure(error));
+  }
+};
+
+export const unfollowUserRequest = () => ({
+  type: UNFOLLOW_USER_REQUEST,
+});
+
+export const unfollowUserSuccess = (userId) => ({
+  type: UNFOLLOW_USER_SUCCESS,
   payload: userId,
 });
+
+export const unfollowUserFailure = (error) => ({
+  type: UNFOLLOW_USER_FAILURE,
+  payload: error,
+});
+
+export const unfollowUser = (userId) => async (dispatch) => {
+  dispatch(unfollowUserRequest());
+
+  try {
+    await axios.post(`http://localhost:3001/user/unfollow/${userId}`);
+    dispatch(unfollowUserSuccess(userId));
+  } catch (error) {
+    dispatch(unfollowUserFailure(error));
+  }
+};

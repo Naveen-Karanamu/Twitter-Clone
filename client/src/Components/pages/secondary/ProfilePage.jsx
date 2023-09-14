@@ -12,8 +12,8 @@ import { GET_USER_TWEETS_REQUEST } from "../../../Redux/Reducer/Tweet/tweet.type
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.authReducer.user);
-  const loading = useSelector((state) => state.authReducer.loading); // Get loading state
+  const user = useSelector((state) => state.authReducer.user._id);
+  const loading = useSelector((state) => state.authReducer.loading); 
   const [tweets, setTweets] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [editedContent, setEditedContent] = useState("");
@@ -58,7 +58,6 @@ const ProfilePage = () => {
       .then(() => {
         setEditMode(false);
         setEditedContent("");
-        // Update the specific tweet in the state
         setTweets((prevTweets) => {
           const updatedTweets = prevTweets.map((tweet) =>
             tweet._id === tweetId ? { ...tweet, content: updatedContent } : tweet
@@ -78,7 +77,6 @@ const ProfilePage = () => {
       .catch((error) => console.error("Error deleting tweet:", error));
   };
 
-  // After update
   const handleUpdateTweet = (tweetId, updatedContent) => {
     dispatch(updateTweet(tweetId, updatedContent))
       .then(() => {
@@ -134,7 +132,6 @@ const ProfilePage = () => {
             isProfilePage={true}
             createdAt={tweet.createdAt}
           >
-            {/* ... (rest of the component) */}
           </TweetComponent>
         ))}
           </>

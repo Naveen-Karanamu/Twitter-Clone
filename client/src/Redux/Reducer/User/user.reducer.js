@@ -3,8 +3,12 @@ import {
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
   GET_USER_FAILURE,
-  FOLLOW_USER,
-  UNFOLLOW_USER,
+  FOLLOW_USER_REQUEST,
+  FOLLOW_USER_SUCCESS,
+  FOLLOW_USER_FAILURE,
+  UNFOLLOW_USER_REQUEST,
+  UNFOLLOW_USER_SUCCESS,
+  UNFOLLOW_USER_FAILURE,
   FETCH_USERS_REQUEST,
   FETCH_USERS_SUCCESS,
   FETCH_USERS_FAILURE,
@@ -14,7 +18,7 @@ const initialState = {
   user: null,
   loading: false,
   error: null,
-  followers: [],
+  following: [],
   users: [],
 };
 
@@ -59,17 +63,32 @@ const userReducer = (state = initialState, action) => {
         users: [],
         error: action.payload,
       };
-    case FOLLOW_USER:
+    case FOLLOW_USER_REQUEST:
+    case UNFOLLOW_USER_REQUEST:
       return {
         ...state,
-        followers: [...state.followers, action.payload],
+        loading: true,
       };
-    case UNFOLLOW_USER:
+    case FOLLOW_USER_SUCCESS:
       return {
         ...state,
-        followers: state.followers.filter(
-          (followerId) => followerId !== action.payload
+        loading: false,
+        followedUsers: [...state.followedUsers, action.payload],
+      };
+    case UNFOLLOW_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        followedUsers: state.followedUsers.filter(
+          (userId) => userId !== action.payload
         ),
+      };
+    case FOLLOW_USER_FAILURE:
+    case UNFOLLOW_USER_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
       };
     default:
       return state;

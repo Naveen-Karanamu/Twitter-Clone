@@ -6,6 +6,7 @@ import HomePage from "./Components/pages/secondary/HomePage";
 import SideNav from "./Components/pages/secondary/SideNav";
 import ProfilePage from "./Components/pages/secondary/ProfilePage";
 import Temp from "./Components/pages/Temp";
+import UsersPage from "./Components/pages/secondary/UsersPage";
 
 function App() {
   return (
@@ -17,12 +18,12 @@ function App() {
         <Route path="/signup" exact component={SignUp} />
         <Route path="/signin" exact component={SignIn} />
         <Route path="/temp" exact component={Temp} />
+        <Route path="/users" exact component={UsersPage} />
         <div className="flex mx-40">
           <SideNav />
           <Switch>
             <Route path="/home" exact component={HomePage} />
             <Route path="/profile" exact component={ProfilePage} />
-            {/* <Route path="/" exact component={HomePage} /> */}
           </Switch>
         </div>
       </Switch>

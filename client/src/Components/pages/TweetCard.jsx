@@ -10,7 +10,7 @@ const TweetCard = ({ isOpen, setIsOpen }) => {
 
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.authReducer.user); 
+  const user = useSelector((state) => state.authReducer.user._id); 
 
   const [content, setContent] = useState(""); 
   const [tweets, setTweets] = useState([]);

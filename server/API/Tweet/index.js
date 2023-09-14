@@ -8,7 +8,7 @@ const Router = express.Router();
 
 /*
 Route: /tweet/following
-Description: get all the tweets from the followers
+Description: get all the tweets from the following
 params: NONE
 Access: Public
 Method: GET
@@ -21,7 +21,7 @@ Router.get(
     try {
       const currentUser = req.user;
 
-      const followedUsers = currentUser.followers;
+      const followedUsers = currentUser.following;
 
       const tweetsFromFollowedUsers = await TweetModel.find({
         user: { $in: followedUsers },

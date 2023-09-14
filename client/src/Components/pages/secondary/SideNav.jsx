@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ImHome3 } from "react-icons/im";
 import { FaUserAlt } from "react-icons/fa";
+import { FaUsersLine } from "react-icons/fa6";
 import TweetCard from "../TweetCard";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -19,6 +20,9 @@ const SideNav = () => {
 
   const handleProfileClick = () => {
     setSelectedPage("profile");
+  };
+  const handleUsersClick = () => {
+    setSelectedPage("users");
   };
 
   const openTweetCard = () => {
@@ -65,6 +69,20 @@ const SideNav = () => {
           <div className="flex gap-4 justify-center items-center hover:bg-gray-300 rounded-3xl px-6 py-3">
             <FaUserAlt className="w-6 h-6" />
             <p className="font-semibold text-xl">Profile</p>
+          </div>
+        </Link>
+        <Link
+          to="/people"
+          onClick={handleUsersClick}
+          className={`flex gap-4 justify-center items-center rounded-3xl px-2 py-1 ${
+            selectedPage === "users"
+              ? "text-black-400 font-bold"
+              : "hover:bg-gray-300 text-gray-600"
+          }`}
+        >
+          <div className="flex gap-4 justify-center items-center hover:bg-gray-300 rounded-3xl px-6 py-3">
+            <FaUsersLine className="w-6 h-6" />
+            <p className="font-semibold text-xl">People</p>
           </div>
         </Link>
         <div>

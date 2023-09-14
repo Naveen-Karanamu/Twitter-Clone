@@ -119,11 +119,15 @@ export const unfollowUserFailure = (error) => ({
   payload: error,
 });
 
-export const unfollowUser = (userId) => async (dispatch) => {
+export const unfollowUser = (userId, currentUserId) => async (dispatch) => {
   dispatch(unfollowUserRequest());
 
   try {
-    await axios.post(`http://localhost:3001/user/unfollow/${userId}`);
+    const response = await axios.post(`http://localhost:3001/user/unfollow/${userId}`, {
+      user: currentUserId, 
+    });
+    const updatedUser = response.data;
+
     dispatch(unfollowUserSuccess(userId));
   } catch (error) {
     dispatch(unfollowUserFailure(error));

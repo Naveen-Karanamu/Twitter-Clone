@@ -11,7 +11,7 @@ const INITIAL_STATE = {
     email: "naveen@gmail.com",
     createdAt: { $date: { $numberLong: "1694586295604" } },
     updatedAt: { $date: { $numberLong: "1694689117816" } },
-    following: [],
+    following: ["6502fb14922233b9d42e370d"],
     tweets: [],
   },
 };

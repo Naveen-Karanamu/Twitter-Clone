@@ -114,9 +114,8 @@ Method: POST
 Router.post('/unfollow/:userId', async (req, res) => {
   const { userId } = req.params;
   const { user } = req.body;
-
   try {
-    const currentUser = await UserModel.findById(user._id);
+    const currentUser = await UserModel.findById(user);
     const targetUser = await UserModel.findById(userId);
 
     if (!currentUser || !targetUser) {

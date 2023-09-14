@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { fetchUsers, followUser } from "../../../Redux/Reducer/User/user.action";
-import SideNav from "./SideNav";
+import { fetchUsers, followUser, unfollowUser } from "../../../Redux/Reducer/User/user.action"; // Import unfollowUser action
 import { FaUserCircle } from "react-icons/fa";
 import People from "./People";
 
-const UserList = ({ users, loading, error, currentUser, followUser, fetchUsers }) => {
+const FollowingPage = ({ users, loading, error, currentUser, followUser, unfollowUser, fetchUsers }) => {
   const [usersToDisplay, setUsersToDisplay] = useState([]);
 
   useEffect(() => {
@@ -13,12 +12,13 @@ const UserList = ({ users, loading, error, currentUser, followUser, fetchUsers }
   }, [fetchUsers]);
 
   useEffect(() => {
-    const filteredUsers = users.filter((user) => !currentUser.following.includes(user._id));
+    const filteredUsers = users.filter((user) => currentUser.following.includes(user._id));
     setUsersToDisplay(filteredUsers);
   }, [users, currentUser]);
 
-  const handleFollow = (userId) => {
-    followUser(userId, currentUser._id);
+  const handleUnfollow = (userId) => {
+    console.log(currentUser._id);
+    unfollowUser(userId, currentUser._id); 
     setUsersToDisplay((prevUsers) => prevUsers.filter((user) => user._id !== userId));
   };
 
@@ -41,9 +41,9 @@ const UserList = ({ users, loading, error, currentUser, followUser, fetchUsers }
                 <div className="flex gap-4">
                   <button
                     className="bg-blueT-100 hover.bg-blue-700 px-2 py-1 rounded-md text-white font-semibold"
-                    onClick={() => handleFollow(user._id)}
+                    onClick={() => handleUnfollow(user._id)}
                   >
-                    Follow
+                    Unfollow
                   </button>
                 </div>
                 <div className="flex gap-4 justify-start items-center">
@@ -73,6 +73,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   fetchUsers,
   followUser,
+  unfollowUser, 
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserList);
+export default connect(mapStateToProps, mapDispatchToProps)(FollowingPage);

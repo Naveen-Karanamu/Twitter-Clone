@@ -1,3 +1,5 @@
-import { UserModel } from "./user";
+import { ImageModel } from "./image/index.js";
+import { TweetModel } from "./tweet/index.js";
+import { UserModel } from "./user/index.js";
 
-export{UserModel};
+export{UserModel,TweetModel, ImageModel};

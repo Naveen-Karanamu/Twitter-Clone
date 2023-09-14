@@ -17,6 +17,7 @@ import ConnectDB from "./database/connection.js";
 import Auth from "./API/Auth/index.js"
 import Tweet from "./API/Tweet/index.js"
 import User from "./API/User/index.js"
+import Image from "./API/Image/index.js"
 
 const app = express();
 const PORT=process.env.PORT || 3001
@@ -42,6 +43,7 @@ routeConfig(passport);
 app.use("/auth", Auth);
 app.use("/tweet", Tweet);
 app.use("/user", User);
+app.use("/image", Image);
 
 app.get("/", (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');

@@ -2,10 +2,10 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import tx_image from "../../assets/images/tx.png";
+import tx_image from "../../../assets/images/tx.png";
 
 // Redux actions
-import { signIn } from "../../Redux/Reducer/Auth/auth.action";
+import { signIn } from "../../../Redux/Reducer/Auth/auth.action";
 
 const SignIn = ({ isOpen, setIsOpen }) => {
   const history = useHistory();

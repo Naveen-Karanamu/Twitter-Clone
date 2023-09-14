@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import tx_image from "../../assets/images/tx.png";
+import tx_image from "../../../assets/images/tx.png";
 
 // Icons
-import { signUp } from "../../Redux/Reducer/Auth/auth.action";
+import { signUp } from "../../../Redux/Reducer/Auth/auth.action";
 
 const SignUp = () => {
   const history = useHistory();

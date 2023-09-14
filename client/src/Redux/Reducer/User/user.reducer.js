@@ -5,6 +5,9 @@ import {
   GET_USER_FAILURE,
   FOLLOW_USER,
   UNFOLLOW_USER,
+  FETCH_USERS_REQUEST,
+  FETCH_USERS_SUCCESS,
+  FETCH_USERS_FAILURE,
 } from "./user.type";
 
 const initialState = {
@@ -12,6 +15,7 @@ const initialState = {
   loading: false,
   error: null,
   followers: [],
+  users: [],
 };
 
 const userReducer = (state = initialState, action) => {
@@ -34,6 +38,25 @@ const userReducer = (state = initialState, action) => {
         ...state,
         user: null,
         loading: false,
+        error: action.payload,
+      };
+    case FETCH_USERS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case FETCH_USERS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        users: action.payload,
+        error: null,
+      };
+    case FETCH_USERS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        users: [],
         error: action.payload,
       };
     case FOLLOW_USER:

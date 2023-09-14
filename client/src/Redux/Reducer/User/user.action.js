@@ -5,6 +5,9 @@ import {
   GET_USER_FAILURE,
   FOLLOW_USER,
   UNFOLLOW_USER,
+  FETCH_USERS_REQUEST,
+  FETCH_USERS_SUCCESS,
+  FETCH_USERS_FAILURE,
 } from "./user.type";
 
 export const getUserRequest = () => ({
@@ -34,6 +37,20 @@ export const getUserInfo = (objectId) => async (dispatch) => {
     dispatch(getUserFailure(error));
   }
 };
+
+export const fetchUsersRequest = () => ({
+  type: FETCH_USERS_REQUEST,
+});
+
+export const fetchUsersSuccess = (users) => ({
+  type: FETCH_USERS_SUCCESS,
+  payload: users,
+});
+
+export const fetchUsersFailure = (error) => ({
+  type: FETCH_USERS_FAILURE,
+  payload: error,
+});
 
 export const followUser = (userId) => ({
   type: FOLLOW_USER,

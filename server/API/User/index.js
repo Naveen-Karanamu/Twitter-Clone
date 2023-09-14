@@ -28,6 +28,23 @@ Router.get("/get/:objectId", async (req, res) => {
 });
 
 /*
+Route: /user/get/:objectId
+Description: Get Specific User
+params: NONE
+Access: Public
+Method: GET
+*/
+Router.get('/getall', async (req, res) => {
+  try {
+    const users = await UserModel.find();
+    res.status(200).json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+/*
 Route: /user/follow/:userId
 Description: To follow an user
 params: NONE

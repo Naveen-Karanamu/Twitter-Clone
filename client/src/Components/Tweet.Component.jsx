@@ -23,6 +23,7 @@ const TweetComponent = ({
   createdAt,
   onUpdateTweet,
   onDeleteTweet,
+  imageURL,
 }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.authReducer.user._id);
@@ -102,6 +103,9 @@ const TweetComponent = ({
         ) : (
           <p>{content}</p>
         )}
+        {imageURL && (
+          <img src={imageURL} alt="Tweet" className="max-w-md mx-auto mt-2" />
+        )}
         <div className="flex justify-between items-center py-3">
           <FaRegComment />
           <AiOutlineRetweet />
@@ -110,13 +114,13 @@ const TweetComponent = ({
           {isProfilePage ? (
             isEditing ? (
               <>
-                <button onClick={handleCancelClick}>Cancel</button>
-                <button onClick={handleUpdateClick}>Update</button>
+                <button onClick={handleCancelClick}  className="text-red-500 hover:text-red-700 font-bold">Cancel</button>
+                <button onClick={handleUpdateClick} className="text-blueT-100 hover:text-blue-700 font-bold">Update</button>
               </>
             ) : (
               <>
-                <button onClick={handleEditClick}>Edit</button>
-                <button onClick={handleDeleteClick}>Delete</button>
+                <button onClick={handleEditClick} className="text-blueT-100 hover:text-blue-700 font-bold">Edit</button>
+                <button onClick={handleDeleteClick} className="text-red-500 hover:text-red-700 font-bold">Delete</button>
               </>
             )
           ) : null}

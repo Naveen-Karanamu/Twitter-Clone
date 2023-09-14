@@ -6,18 +6,23 @@ import {
   updateTweet,
   deleteTweet,
   getUserTweets,
+  createTweet, 
 } from "../../../Redux/Reducer/Tweet/tweet.action";
 import { getUserInfo } from "../../../Redux/Reducer/User/user.action";
 import { GET_USER_TWEETS_REQUEST } from "../../../Redux/Reducer/Tweet/tweet.type";
 
+import { uploadImage } from "../../../Redux/Reducer/Image/image.action";
+
 const ProfilePage = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.authReducer.user._id);
-  const loading = useSelector((state) => state.authReducer.loading); 
+  const loading = useSelector((state) => state.authReducer.loading);
   const [tweets, setTweets] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [editedContent, setEditedContent] = useState("");
   const [userInfo, setUserInfo] = useState(null);
+  const [content, setContent] = useState("");
+  const [image, setImage] = useState(null);
 
   useEffect(() => {
     const fetchTweets = async () => {
@@ -43,12 +48,7 @@ const ProfilePage = () => {
     }
   }, [dispatch, user]);
 
-  // useEffect(() => {
-  //   console.log("editedContent:", editedContent);
-  // }, [editedContent]);
-
   const handleEditClick = (tweetId, content) => {
-    console.log("editedContent inside handleEditClick:", content);
     setEditMode(true);
     setEditedContent(content);
   };
@@ -71,7 +71,6 @@ const ProfilePage = () => {
   const handleDeleteClick = (tweetId) => {
     dispatch(deleteTweet(tweetId))
       .then(() => {
-        // Remove the deleted tweet from the state
         setTweets((prevTweets) => prevTweets.filter((tweet) => tweet._id !== tweetId));
       })
       .catch((error) => console.error("Error deleting tweet:", error));
@@ -99,6 +98,25 @@ const ProfilePage = () => {
       .catch((error) => console.error("Error fetching tweets:", error));
   };
 
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
+  };
+
+  const handleImageUpload = () => {
+    if (image) {
+      dispatch(uploadImage(image))
+        .then((imageURL) => {
+          dispatch(createTweet(content, user, imageURL))
+            .then(() => {
+              setImage(null);
+              fetchUpdatedTweets();
+            })
+            .catch((error) => console.error("Error creating tweet:", error));
+        })
+        .catch((error) => console.error("Error uploading image:", error));
+    }
+  };
+
   return (
     <>
       <div>
@@ -118,22 +136,21 @@ const ProfilePage = () => {
               <p className="text-bold text-xl">Posts</p>
             </div>
             {tweets !== null &&
-        tweets.map((tweet) => (
-          <TweetComponent
-            key={tweet._id}
-            tweetId={tweet._id}
-            username={userInfo ? userInfo.username : ""}
-            fullname={userInfo ? userInfo.fullname : ""}
-            content={editMode ? editedContent : tweet.content}
-            onEdit={() => handleEditClick(tweet._id, tweet.content)} 
-            onDelete={() => handleDeleteClick(tweet._id)} 
-            onUpdateTweet={handleUpdateClick}
-            onDeleteTweet={handleDeleteClick}
-            isProfilePage={true}
-            createdAt={tweet.createdAt}
-          >
-          </TweetComponent>
-        ))}
+              tweets.map((tweet) => (
+                <TweetComponent
+                  key={tweet._id}
+                  tweetId={tweet._id}
+                  username={userInfo ? userInfo.username : ""}
+                  fullname={userInfo ? userInfo.fullname : ""}
+                  content={editMode ? editedContent : tweet.content}
+                  onEdit={() => handleEditClick(tweet._id, tweet.content)}
+                  onDelete={() => handleDeleteClick(tweet._id)}
+                  onUpdateTweet={handleUpdateClick}
+                  onDeleteTweet={handleDeleteClick}
+                  isProfilePage={true}
+                  createdAt={tweet.createdAt}
+                ></TweetComponent>
+              ))}
           </>
         )}
       </div>

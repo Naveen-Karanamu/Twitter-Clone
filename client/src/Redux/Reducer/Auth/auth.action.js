@@ -6,6 +6,7 @@ import {
   SIGN_UP,
   SIGN_IN_REQUEST,
   SIGN_UP_REQUEST,
+  LOGOUT 
 } from "./auth.type";
 
 export const signIn = (userData) => async (dispatch) => {
@@ -51,4 +52,10 @@ export const signUp = (userData) => async (dispatch) => {
   } catch (error) {
     return dispatch({ type: "ERROR", payload: error, status: "ERROR" });
   }
+};
+
+export const logout = () => (dispatch) => {
+  localStorage.removeItem("user");
+
+  dispatch({ type: LOGOUT });
 };

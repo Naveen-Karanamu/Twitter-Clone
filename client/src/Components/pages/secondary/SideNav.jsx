@@ -2,28 +2,35 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ImHome3 } from "react-icons/im";
 import { FaUserAlt } from "react-icons/fa";
+import TweetCard from "../TweetCard";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+
 import tx_image from "../../../assets/images/tx.png";
-import TweetCard from "../TweetCard"; // Import the TweetCard component
+import { logout } from "../../../Redux/Reducer/Auth/auth.action";
 
 const SideNav = () => {
-  // State to track the selected page
   const [selectedPage, setSelectedPage] = useState("home");
-  // State to control the visibility of the TweetCard
   const [isTweetCardOpen, setIsTweetCardOpen] = useState(false);
 
-  // Function to handle the click on the Home link
   const handleHomeClick = () => {
     setSelectedPage("home");
   };
 
-  // Function to handle the click on the Profile link
   const handleProfileClick = () => {
     setSelectedPage("profile");
   };
 
-  // Function to open the TweetCard
   const openTweetCard = () => {
     setIsTweetCardOpen(true);
+  };
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    history.push("/signin"); 
   };
 
   return (
@@ -62,14 +69,21 @@ const SideNav = () => {
         </Link>
         <div>
           <button
-            onClick={openTweetCard} // Open the TweetCard when this button is clicked
+            onClick={handleLogout}
+            className="bg-red-500 hover:bg-red-600 px-11 py-2 rounded-3xl mt-4 text-white font-bold text-lg"
+          >
+            Log Out
+          </button>
+        </div>
+        <div>
+          <button
+            onClick={openTweetCard}
             className="bg-blueT-100 hover:bg-blue-700 px-20 py-2 rounded-3xl mt-4 text-white font-bold text-lg"
           >
             Tweet
           </button>
         </div>
       </div>
-      {/* Render the TweetCard component if isTweetCardOpen is true */}
       {isTweetCardOpen && (
         <TweetCard isOpen={isTweetCardOpen} setIsOpen={setIsTweetCardOpen} />
       )}

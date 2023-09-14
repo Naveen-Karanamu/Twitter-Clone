@@ -1,9 +1,11 @@
-import axios from 'axios';
+import axios from "axios";
 import {
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
   GET_USER_FAILURE,
-} from './user.type';
+  FOLLOW_USER,
+  UNFOLLOW_USER,
+} from "./user.type";
 
 export const getUserRequest = () => ({
   type: GET_USER_REQUEST,
@@ -22,7 +24,9 @@ export const getUserFailure = (error) => ({
 export const getUserInfo = (objectId) => async (dispatch) => {
   dispatch(getUserRequest());
   try {
-    const response = await axios.get(`http://localhost:3001/user/get/${objectId}`);
+    const response = await axios.get(
+      `http://localhost:3001/user/get/${objectId}`
+    );
     const userData = response.data;
     dispatch(getUserSuccess(response.data));
     return userData;
@@ -30,3 +34,13 @@ export const getUserInfo = (objectId) => async (dispatch) => {
     dispatch(getUserFailure(error));
   }
 };
+
+export const followUser = (userId) => ({
+  type: FOLLOW_USER,
+  payload: userId,
+});
+
+export const unfollowUser = (userId) => ({
+  type: UNFOLLOW_USER,
+  payload: userId,
+});

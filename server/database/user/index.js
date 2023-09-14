@@ -17,7 +17,7 @@ const UserSchema = new mongoose.Schema(
     followers: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Users", // Reference to other User documents
+        ref: "Users",
       },
     ],
   },

@@ -4,7 +4,7 @@ import passport from "passport";
 import { TweetModel } from "../../database/tweet/index.js";
 
 import mongoose from "mongoose";
-const router = express.Router();
+const Router = express.Router();
 
 /*
 Route: /tweet/following
@@ -14,7 +14,7 @@ Access: Public
 Method: GET
 */
 
-router.get(
+Router.get(
   "/following",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
@@ -43,7 +43,7 @@ Access: Public
 Method: GET
 */
 
-router.get("/user/:userId", async (req, res) => {
+Router.get("/user/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
 
@@ -69,7 +69,7 @@ params: NONE
 Access: Public
 Method: POST
 */
-router.post("/new", async (req, res) => {
+Router.post("/new", async (req, res) => {
   try {
     const { content, user } = req.body;
     const tweet = new TweetModel({ content, user });
@@ -88,7 +88,7 @@ params: NONE
 Access: Public
 Method: GET
 */
-router.get("/getall", async (req, res) => {
+Router.get("/getall", async (req, res) => {
   try {
     const tweets = await TweetModel.find().sort({ createdAt: -1 });
     res.status(200).json(tweets);
@@ -105,7 +105,7 @@ params: NONE
 Access: Public
 Method: GET
 */
-router.get("/get/:tweetId", async (req, res) => {
+Router.get("/get/:tweetId", async (req, res) => {
   try {
     const tweet = await TweetModel.findById(req.params.tweetId);
     if (!tweet) {
@@ -126,9 +126,9 @@ params: NONE
 Access: Public
 Method: PUL
 */
-router.put("/update/:tweetId", async (req, res) => {
+Router.put("/update/:tweetId", async (req, res) => {
   try {
-    const { content } = req.body;
+    const { contenRoutert } = req.body;
     const tweet = await TweetModel.findByIdAndUpdate(
       req.params.tweetId,
       { content },
@@ -152,7 +152,7 @@ params: NONE
 Access: Public
 Method: Delete
 */
-router.delete("/delete/:tweetId", async (req, res) => {
+Router.delete("/delete/:tweetId", async (req, res) => {
   try {
     const tweet = await TweetModel.findByIdAndDelete(req.params.tweetId);
     if (!tweet) {
@@ -166,4 +166,4 @@ router.delete("/delete/:tweetId", async (req, res) => {
   }
 });
 
-export default router;
+export default Router;

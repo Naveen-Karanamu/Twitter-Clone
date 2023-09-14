@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import { FaRegComment } from "react-icons/fa";
 import { AiOutlineRetweet, AiOutlineHeart } from "react-icons/ai";
 import { BiPoll } from "react-icons/bi";
 import { FaUserCircle } from "react-icons/fa";
 
+import {
+  getUserTweets,
+  updateTweet,
+} from "../Redux/Reducer/Tweet/tweet.action";
+
 const TweetComponent = ({
+  tweetId,
   username,
   content,
   onEdit,
@@ -13,8 +21,14 @@ const TweetComponent = ({
   fullname,
   isProfilePage = false,
   createdAt,
+  onUpdateTweet,
+  onDeleteTweet,
 }) => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.authReducer.user);
   const [isEditing, setIsEditing] = useState(false);
+  const [tweets, setTweets] = useState(null);
+
   const [editedContent, setEditedContent] = useState(content);
   const [timeAgo, setTimeAgo] = useState("");
 
@@ -35,6 +49,7 @@ const TweetComponent = ({
       const hours = Math.floor(timeDiffInMilliseconds / (60 * 60 * 1000));
       setTimeAgo(`${hours} Hours`);
     }
+    setIsEditing(false);
   }, [createdAt]);
 
   const handleEditClick = () => {
@@ -47,8 +62,23 @@ const TweetComponent = ({
   };
 
   const handleUpdateClick = () => {
-    onUpdate(editedContent);
-    setIsEditing(false);
+    console.log(editedContent);
+    // onUpdate(editedContent);
+    onUpdateTweet(tweetId, editedContent);
+    dispatch(updateTweet(tweetId, editedContent))
+      .then(() => {
+        setIsEditing(false);
+        setEditedContent("");
+        dispatch(getUserTweets(user))
+          .then((response) => setTweets(response.payload || []))
+          .catch((error) => console.error("Error fetching tweets:", error));
+      })
+      .catch((error) => console.error("Error updating tweet:", error));
+  };
+
+  const handleDeleteClick = () => {
+    onDeleteTweet(tweetId);
+    onDelete();
   };
 
   return (
@@ -86,7 +116,7 @@ const TweetComponent = ({
             ) : (
               <>
                 <button onClick={handleEditClick}>Edit</button>
-                <button onClick={onDelete}>Delete</button>
+                <button onClick={handleDeleteClick}>Delete</button>
               </>
             )
           ) : null}

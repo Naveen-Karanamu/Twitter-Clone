@@ -8,7 +8,7 @@ import {
   getUserTweets,
 } from "../../../Redux/Reducer/Tweet/tweet.action";
 import { getUserInfo } from "../../../Redux/Reducer/User/user.action";
-import {GET_USER_TWEETS_REQUEST} from "../../../Redux/Reducer/Tweet/tweet.type";
+import { GET_USER_TWEETS_REQUEST } from "../../../Redux/Reducer/Tweet/tweet.type";
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchTweets = async () => {
       try {
-        dispatch({ type: GET_USER_TWEETS_REQUEST }); 
+        dispatch({ type: GET_USER_TWEETS_REQUEST });
 
         const tweetsData = await dispatch(getUserTweets(user));
         setTweets(tweetsData || []);
@@ -43,19 +43,28 @@ const ProfilePage = () => {
     }
   }, [dispatch, user]);
 
+  // useEffect(() => {
+  //   console.log("editedContent:", editedContent);
+  // }, [editedContent]);
+
   const handleEditClick = (tweetId, content) => {
+    console.log("editedContent inside handleEditClick:", content);
     setEditMode(true);
     setEditedContent(content);
   };
 
-  const handleUpdateClick = (tweetId) => {
-    dispatch(updateTweet(tweetId, editedContent))
+  const handleUpdateClick = (tweetId, updatedContent) => {
+    dispatch(updateTweet(tweetId, updatedContent))
       .then(() => {
         setEditMode(false);
         setEditedContent("");
-        dispatch(getUserTweets(user._id))
-          .then((response) => setTweets(response.payload || []))
-          .catch((error) => console.error("Error fetching tweets:", error));
+        // Update the specific tweet in the state
+        setTweets((prevTweets) => {
+          const updatedTweets = prevTweets.map((tweet) =>
+            tweet._id === tweetId ? { ...tweet, content: updatedContent } : tweet
+          );
+          return updatedTweets;
+        });
       })
       .catch((error) => console.error("Error updating tweet:", error));
   };
@@ -63,11 +72,33 @@ const ProfilePage = () => {
   const handleDeleteClick = (tweetId) => {
     dispatch(deleteTweet(tweetId))
       .then(() => {
-        dispatch(getUserTweets(user._id))
-          .then((response) => setTweets(response.payload || []))
-          .catch((error) => console.error("Error fetching tweets:", error));
+        // Remove the deleted tweet from the state
+        setTweets((prevTweets) => prevTweets.filter((tweet) => tweet._id !== tweetId));
       })
       .catch((error) => console.error("Error deleting tweet:", error));
+  };
+
+  // After update
+  const handleUpdateTweet = (tweetId, updatedContent) => {
+    dispatch(updateTweet(tweetId, updatedContent))
+      .then(() => {
+        fetchUpdatedTweets();
+      })
+      .catch((error) => console.error("Error updating tweet:", error));
+  };
+
+  const handleDeleteTweet = (tweetId) => {
+    dispatch(deleteTweet(tweetId))
+      .then(() => {
+        fetchUpdatedTweets();
+      })
+      .catch((error) => console.error("Error deleting tweet:", error));
+  };
+
+  const fetchUpdatedTweets = () => {
+    dispatch(getUserTweets(user))
+      .then((response) => setTweets(response.payload || []))
+      .catch((error) => console.error("Error fetching tweets:", error));
   };
 
   return (
@@ -79,7 +110,9 @@ const ProfilePage = () => {
           <>
             {userInfo && (
               <>
-                <p className="text-4xl font-bold my-2">Hello {userInfo.fullname}</p>
+                <p className="text-4xl font-bold my-2">
+                  Hello {userInfo.fullname}
+                </p>
                 <p>Username: {userInfo.username}</p>
               </>
             )}
@@ -87,29 +120,23 @@ const ProfilePage = () => {
               <p className="text-bold text-xl">Posts</p>
             </div>
             {tweets !== null &&
-              tweets.map((tweet) => (
-                <TweetComponent
-                  key={tweet.id}
-                  username={userInfo ? userInfo.username : ""}
-                  fullname={userInfo ? userInfo.fullname : ""}
-                  content={editMode ? editedContent : tweet.content}
-                  onUpdate={() => handleUpdateClick(tweet.id)}
-                  isProfilePage={true}
-                  createdAt={tweet.createdAt}
-                >
-                  {editMode ? (
-                    <>
-                      <button onClick={() => handleUpdateClick(tweet.id)}>Update</button>
-                      <button onClick={() => setEditMode(false)}>Cancel</button>
-                    </>
-                  ) : (
-                    <>
-                      <button onClick={() => handleEditClick(tweet.id, tweet.content)}>Edit</button>
-                      <button onClick={() => handleDeleteClick(tweet.id)}>Delete</button>
-                    </>
-                  )}
-                </TweetComponent>
-              ))}
+        tweets.map((tweet) => (
+          <TweetComponent
+            key={tweet._id}
+            tweetId={tweet._id}
+            username={userInfo ? userInfo.username : ""}
+            fullname={userInfo ? userInfo.fullname : ""}
+            content={editMode ? editedContent : tweet.content}
+            onEdit={() => handleEditClick(tweet._id, tweet.content)} 
+            onDelete={() => handleDeleteClick(tweet._id)} 
+            onUpdateTweet={handleUpdateClick}
+            onDeleteTweet={handleDeleteClick}
+            isProfilePage={true}
+            createdAt={tweet.createdAt}
+          >
+            {/* ... (rest of the component) */}
+          </TweetComponent>
+        ))}
           </>
         )}
       </div>

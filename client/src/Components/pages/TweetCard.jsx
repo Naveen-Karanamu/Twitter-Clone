@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"; 
-import { createTweet } from "../../Redux/Reducer/Tweet/tweet.action"; 
+import { createTweet, getUserTweets, getAllTweets } from "../../Redux/Reducer/Tweet/tweet.action"; 
 
 const TweetCard = ({ isOpen, setIsOpen }) => {
   function closeModal() {
@@ -13,6 +13,7 @@ const TweetCard = ({ isOpen, setIsOpen }) => {
   const user = useSelector((state) => state.authReducer.user); 
 
   const [content, setContent] = useState(""); 
+  const [tweets, setTweets] = useState([]);
 
   const handleChange = (e) => {
     setContent(e.target.value);
@@ -22,10 +23,13 @@ const TweetCard = ({ isOpen, setIsOpen }) => {
     if (content.trim() === "") {
       return;
     }
-
-    dispatch(createTweet(content, user)); 
-    closeModal(); 
-    setContent("");
+    dispatch(createTweet(content, user))
+      .then(() => {
+        closeModal();
+        setContent("");
+        dispatch(getAllTweets());
+      })
+      .catch((error) => console.error("Error creating tweet:", error));
   };
 
   return (
@@ -82,7 +86,7 @@ const TweetCard = ({ isOpen, setIsOpen }) => {
                     </div>
                     <div className="flex items-center justify-center">
                       <div
-                        className="bg-zomatoRed-300 py-2 rounded-lg  w-full text-center hover:cursor-pointer"
+                        className="bg-zomatoRed-300 py-2 rounded-lg  w-48 text-center hover:cursor-pointer bg-blueT-100 text-white font-bold text-lg hover:bg-blue-600"
                         onClick={submit}
                       >
                         Post

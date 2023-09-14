@@ -138,8 +138,8 @@ import {GET_USER_TWEETS_REQUEST} from "../../../Redux/Reducer/Tweet/tweet.type";
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.user);
-  const loading = useSelector((state) => state.auth.loading); // Get loading state
+  const user = useSelector((state) => state.authReducer.user);
+  const loading = useSelector((state) => state.authReducer.loading); // Get loading state
   const [tweets, setTweets] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [editedContent, setEditedContent] = useState("");

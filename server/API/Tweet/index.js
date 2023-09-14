@@ -3,6 +3,7 @@ import express from "express";
 import passport from "passport";
 import { TweetModel } from "../../database/tweet/index.js";
 
+import mongoose from "mongoose";
 const router = express.Router();
 
 /*
@@ -41,9 +42,14 @@ params: userId (User's ID)
 Access: Public
 Method: GET
 */
+
 router.get("/user/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
+
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ error: "Invalid userId" });
+    }
 
     const tweetsByUser = await TweetModel.find({ user: userId }).sort({
       createdAt: -1,

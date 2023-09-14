@@ -99,8 +99,7 @@ const TweetCard = ({ isOpen, setIsOpen }) => {
 
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.auth.user); 
-  const userId = user && user.id;
+  const user = useSelector((state) => state.authReducer.user); 
 
   const [content, setContent] = useState(""); 
 
@@ -113,7 +112,7 @@ const TweetCard = ({ isOpen, setIsOpen }) => {
       return;
     }
 
-    dispatch(createTweet(content, userId)); 
+    dispatch(createTweet(content, user)); 
     closeModal(); 
     setContent("");
   };

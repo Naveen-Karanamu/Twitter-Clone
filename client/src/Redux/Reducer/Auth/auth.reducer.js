@@ -1,7 +1,7 @@
 import { SIGN_IN, SIGN_UP } from "./auth.type";
 
 const INITIAL_STATE = {
-  user: null,
+  user: "650155b70a5ad9b9d13658dd",
 };
 
 const authReducer = (state = INITIAL_STATE, action) => {
@@ -11,9 +11,10 @@ const authReducer = (state = INITIAL_STATE, action) => {
     // case SIGN_UP:
     //     return { ...state,  };
     case SIGN_UP:
-    case SIGN_IN:
-      console.log(action.payload.userId);
       return { ...state, user: action.payload, isLoggedIn: true };
+    case SIGN_IN:
+      console.log(action.payload);
+      return { ...state, user: 2, isLoggedIn: true };
       
     default:
       return { ...state };

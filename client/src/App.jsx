@@ -5,6 +5,7 @@ import SignIn from "./Components/pages/primary/SignIn";
 import HomePage from "./Components/pages/secondary/HomePage";
 import SideNav from "./Components/pages/secondary/SideNav";
 import ProfilePage from "./Components/pages/secondary/ProfilePage";
+import Temp from "./Components/pages/Temp";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         </Route>
         <Route path="/signup" exact component={SignUp} />
         <Route path="/signin" exact component={SignIn} />
+        <Route path="/temp" exact component={Temp} />
         <div className="flex mx-40">
           <SideNav />
           <Switch>

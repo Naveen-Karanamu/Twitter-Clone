@@ -49,41 +49,42 @@ Access: Public
 Method: POST
 */
 Router.post("/signin", async (req, res) => {
-    try {
+  try {
     //   console.time();
-      await validateSignIn(req.body.credentials);
-  
-      const { email, username, password } = req.body.credentials;
-  
-      let user;
-  
-      if (email) {
-        user = await UserModel.findByEmailAndPassword({ email, password });
-      } else if (username) {
-        user = await UserModel.findByEmailOrUsername({ username });
-      } else {
-        throw new Error("Invalid credentials provided.");
-      }
-  
-      if (!user) {
-        throw new Error("User does not exist!");
-      }
-  
-      // Compare password
-      const doesPasswordMatch = await bcrypt.compare(password, user.password);
-  
-      if (!doesPasswordMatch) {
-        throw new Error("Invalid Password!");
-      }
-  
-      // Generate JWT token
-      const token = user.generateJWT();
-  
-      return res.status(200).json({ token, status: "Success" });
-    } catch (error) {
-      return res.status(500).json({ error: error.message });
+    await validateSignIn(req.body.credentials);
+
+    const { email, username, password } = req.body.credentials;
+
+    let user;
+
+    if (email) {
+      user = await UserModel.findByEmailAndPassword({ email, password });
+    } else if (username) {
+      user = await UserModel.findByEmailOrUsername({ username });
+    } else {
+      throw new Error("Invalid credentials provided.");
     }
-  });
-  
+
+    if (!user) {
+      throw new Error("User does not exist!");
+    }
+
+    // Compare password
+    const doesPasswordMatch = await bcrypt.compare(password, user.password);
+
+    if (!doesPasswordMatch) {
+      throw new Error("Invalid Password!");
+    }
+
+    const userId = user._id;
+
+    // Generate JWT token
+    const token = user.generateJWT();
+
+    return res.status(200).json({ token, status: "Success", userId });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+});
 
 export default Router;

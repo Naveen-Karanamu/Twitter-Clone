@@ -56,7 +56,7 @@ const FollowingPage = ({ users, loading, error, currentUser, followUser, unfollo
               <div className="border-2 rounded-lg p-4 flex flex-row-reverse justify-between items-center" key={user._id}>
                 <div className="flex gap-4">
                   <button
-                    className="bg-blueT-100 hover.bg-blue-700 px-2 py-1 rounded-md text-white font-semibold"
+                    className="bg-red-500 hover:bg-red-700 px-2 py-1 rounded-md text-white font-semibold"
                     onClick={() => handleUnfollow(user._id)}
                   >
                     Unfollow

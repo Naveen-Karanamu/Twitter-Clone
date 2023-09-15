@@ -5,7 +5,7 @@
 ### BackEnd Deployed Link
 `https://twitter-clone-be.vercel.app/`
 
-Ps: There is some Potential CORS error (will fix it), run in your Local for Smooth Functioning.
+Ps: In the Backend Deployed link, There is some Potential CORS error (will fix it), run in your Local for Smooth Functioning.
 
 ## This is the Full Stack Twitter mini Clone built using: 
 * MERN Stack

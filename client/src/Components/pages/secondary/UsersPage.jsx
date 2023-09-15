@@ -7,7 +7,7 @@ import People from "./People";
 
 const UserList = ({ users, loading, error, currentUser, followUser, fetchUsers }) => {
   const [usersToDisplay, setUsersToDisplay] = useState([]);
-  const [currUser, setCurrUser] = useState({_id:"", following:[]});
+  const [currUser, setCurrUser] = useState({_id:"", following:[""]});
   
   const dispatch = useDispatch();
   useEffect(() => {
@@ -26,14 +26,14 @@ const UserList = ({ users, loading, error, currentUser, followUser, fetchUsers }
 
   useEffect(() => {
     // const filteredUsers = users.filter((user) => !currentUser.following.includes(user._id) && user._id !== currentUser._id);
-    const filteredUsers = users.filter((user) => !currUser.following.includes(user._id) && user._id !== currUser._id);
+    const filteredUsers = users.filter((user) => !currUser?.following.includes(user._id) && user._id !== currUser?._id);
     setUsersToDisplay(filteredUsers);
   }, [users, currUser]);
 
   const handleFollow = (userId) => {
     // followUser(userId, currentUser._id);
-    console.log(currUser._id);
-    followUser(userId, currUser._id);
+    console.log(currUser?._id);
+    followUser(userId, currUser?._id);
     setUsersToDisplay((prevUsers) => prevUsers.filter((user) => user._id !== userId));
   };
 

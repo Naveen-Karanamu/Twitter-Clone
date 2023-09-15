@@ -124,7 +124,7 @@ const ProfilePage = () => {
 
   return (
     <>
-      <div className="">
+      <div className="" style={{ width: '500px' }}>
         {loading ? (
           <p>Loading...</p>
         ) : (
@@ -138,7 +138,7 @@ const ProfilePage = () => {
               </>
             )}
             <div className="my-4">
-              <p className="text-bold text-xl">Posts</p>
+              <p className="font-bold text-2xl text-xl">Your Posts</p>
             </div>
             {tweets !== null &&
               tweets.map((tweet) => (

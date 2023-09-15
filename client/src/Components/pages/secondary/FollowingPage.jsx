@@ -27,14 +27,14 @@ const FollowingPage = ({ users, loading, error, currentUser, followUser, unfollo
   //   const filteredUsers = users.filter((user) => currentUser.following.includes(user._id));
   //   setUsersToDisplay(filteredUsers);
   // }, [users, currentUser]);
-    const filteredUsers = users.filter((user) => currUser.following.includes(user._id));
+    const filteredUsers = users.filter((user) => currUser?.following.includes(user._id));
     setUsersToDisplay(filteredUsers);
   }, [users, currUser]);
 
   const handleUnfollow = (userId) => {
     // console.log(currentUser._id);
     // unfollowUser(userId, currentUser._id); 
-    unfollowUser(userId, currUser._id); 
+    unfollowUser(userId, currUser?._id); 
     setUsersToDisplay((prevUsers) => prevUsers.filter((user) => user._id !== userId));
   };
 

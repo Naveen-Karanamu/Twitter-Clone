@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import TweetComponent from "../../Tweet.Component";
-import { getAllTweets } from "../../../Redux/Reducer/Tweet/tweet.action";
-import { getUserInfo } from "../../../Redux/Reducer/User/user.action";
+import TweetComponent from "../../../Tweet.Component";
+import { getAllTweets } from "../../../../Redux/Reducer/Tweet/tweet.action";
+import { getUserInfo } from "../../../../Redux/Reducer/User/user.action";
+import MainHome from "./HomeMain";
+import Header from "./Header";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -43,11 +45,8 @@ const HomePage = () => {
 
   return (
     <>
-      <div>
-        <div className="my-4 flex justify-around">
-          <p className="text-bold text-xl">Posts</p>
-          <p className="text-bold text-xl">Following</p>
-        </div>
+      <div className="w-full">
+        <Header />
         {tweets.map((tweet) => (
           <TweetComponent
             key={tweet.id}

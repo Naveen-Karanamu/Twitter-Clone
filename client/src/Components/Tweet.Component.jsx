@@ -84,7 +84,7 @@ const TweetComponent = ({
 
   return (
     <>
-      <div className="w-96 py-2 border-y-2">
+      <div className="w-96 py-2 border-y-2" style={{ width: '500px' }}>
         <div className="flex justify-between flex-row-reverse items-center">
           <div>
             <p className="text-xs font-semibold">{timeAgo}</p>

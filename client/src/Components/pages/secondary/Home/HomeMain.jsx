@@ -1,33 +1,33 @@
 import React from "react";
 import { Link, Route, Switch, useRouteMatch } from "react-router-dom";
-import UserList from "./UsersPage";
-import FollowingList from "./FollowingPage";
+import MyHome from "./MyHome";
+import HomePage from "./HomePage";
 
-function People() {
+function HomeMain() {
   let { path, url } = useRouteMatch();
 
   return (
     <div>
-      <div className=" gap-44 flex justify-between border-b-2 mt-10 pb-5 mb-5" style={{ width: '500px' }}>
+      <div className="gap-44 flex justify-between border-b-2 mt-10 pb-5 mb-5" style={{ width: '500px' }}>
         <div className="w-full">
           <Link
-            to={`/people/users`}
+            to={`home/posts`} 
             className={`text-3xl font-bold mt-10 mb-6 pb-2 ${
-              window.location.pathname.endsWith("/users")
+              window.location.pathname.endsWith("/posts")
                 ? "text-blueT-100"
                 : "hover:text-black font-semibold"
             }`}
           >
-            User List
+            Posts
           </Link>
         </div>
         <div className="w-full">
           <Link
-            to={`/people/following`}
+            to={`home/followtweets`}
             className={`text-3xl font-bold mt-10 mb-6 pb-4 ${
-              window.location.pathname.endsWith("/following")
-              ? "text-blueT-100"
-              : "hover:text-black font-semibold"
+              window.location.pathname.endsWith("/followtweets")
+                ? "text-blueT-100"
+                : "hover:text-black font-semibold"
             }`}
           >
             Following
@@ -36,15 +36,16 @@ function People() {
       </div>
 
       <Switch>
-        <Route path={`${path}/users`}>
-          <UserList />
+        <Route path={`home/posts`}>
+          <HomePage />
         </Route>
-        <Route path={`${path}/following`}>
-          <FollowingList />
+        <Route path={`home/followtweets`}>
+          <MyHome />
         </Route>
       </Switch>
     </div>
   );
 }
 
-export default People;
+export default HomeMain;
+

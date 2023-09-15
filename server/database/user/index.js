@@ -9,10 +9,11 @@ const UserSchema = new mongoose.Schema(
     email: { type: String, required: false },
     password: { type: String },
     tweets: [
-      {
-        content: { type: String, required: true },
-        timestamp: { type: Date, default: Date.now },
-      },
+      // {
+      //   content: { type: String, required: true },
+      //   timestamp: { type: Date, default: Date.now },
+      // },
+      String
     ],
     following: [
       {

@@ -89,14 +89,17 @@ export const followUserFailure = (error) => ({
 });
 
 export const followUser = (userId) => async (dispatch, getState) => {
-  const currentUser = getState().authReducer.user;
-  const currentUserId = currentUser._id;
+  // const currentUser = getState().authReducer.user;
+  const currentUser = JSON.parse(localStorage.getItem('userObj'));
+
+  const currentUserId = currentUser.userId;
+  console.log("red",currentUserId);
 
   dispatch(followUserRequest());
 
   try {
     await axios.post(`http://localhost:3001/user/follow/${userId}`, {
-      user: currentUser,
+      user: {_id:currentUserId},
     });
 
     dispatch(followUserSuccess(userId));

@@ -55,6 +55,7 @@ const HomePage = () => {
             fullname={userInfoMap[tweet.user]?.fullname || ""}
             content={tweet.content}
             createdAt={tweet.createdAt}
+            imageURL={tweet.imageURL}
           />
         ))}
       </div>

@@ -1,18 +1,46 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import { useDispatch, useSelector } from "react-redux"; 
-import { createTweet, getUserTweets, getAllTweets } from "../../Redux/Reducer/Tweet/tweet.action"; 
+import { useDispatch, useSelector } from "react-redux";
+import {
+  createTweet,
+  getUserTweets,
+  getAllTweets,
+} from "../../Redux/Reducer/Tweet/tweet.action";
+import { uploadImage } from "../../Redux/Reducer/Image/image.action";
 
 const TweetCard = ({ isOpen, setIsOpen }) => {
+  const [image, setImage] = useState(null);
+
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
+  };
+
+  const handleImageUpload = () => {
+    if (image) {
+      dispatch(uploadImage(image))
+        .then((imageURL) => {
+          dispatch(createTweet(content, user, imageURL))
+            .then(() => {
+              closeModal();
+              setContent("");
+              setImage(null);
+              dispatch(getAllTweets());
+            })
+            .catch((error) => console.error("Error creating tweet:", error));
+        })
+        .catch((error) => console.error("Error uploading image:", error));
+    }
+  };
+
   function closeModal() {
     setIsOpen(false);
   }
 
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.authReducer.user._id); 
+  const user = useSelector((state) => state.authReducer.user._id);
 
-  const [content, setContent] = useState(""); 
+  const [content, setContent] = useState("");
   const [tweets, setTweets] = useState([]);
 
   const handleChange = (e) => {
@@ -52,7 +80,10 @@ const TweetCard = ({ isOpen, setIsOpen }) => {
             >
               <Dialog.Overlay className="fixed inset-0" />
             </Transition.Child>
-            <span className="inline-block h-screen align-middle" aria-hidden="true">
+            <span
+              className="inline-block h-screen align-middle"
+              aria-hidden="true"
+            >
               &#8203;
             </span>
             <Transition.Child
@@ -83,6 +114,14 @@ const TweetCard = ({ isOpen, setIsOpen }) => {
                         id="content"
                         className="bg-white border border-gray-400 py-2 w-full  rounded-lg md:text-lg px-6"
                       />
+                    </div>
+                    <div>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                      />
+                      <button onClick={handleImageUpload}>Upload Image</button>
                     </div>
                     <div className="flex items-center justify-center">
                       <div

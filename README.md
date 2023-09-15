@@ -94,13 +94,15 @@ AWS_SECRET_ACCESS_KEY = ""
 
 ### Page 1 : (SignUp Page)
 * Sign up if you are a new User
+* Then you should Sign In again for security purpose
+* If you are already an existing user, then you can navigate to `/signin` by clicking "Sign In"
 Route :
 ```
 /signup
 ```
 ### Page 2 : (SignIn Page)
 * If you are already an existing user
-* Or you can directly navigate from the '/signup' by clicking "Sign In"
+* If you are a new user then navigate to `/signup` by clicking "Sign Up"
 
 Route : 
 ```

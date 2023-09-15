@@ -30,6 +30,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
       localStorage.setItem('userObj', JSON.stringify(action.payload));
       return { ...state, user: action.payload, isLoggedIn: true };
     case LOGOUT:
+      localStorage.removeItem("userObj")
       return { ...state, user: null, status: null, isLoggedIn: true };
 
     default:

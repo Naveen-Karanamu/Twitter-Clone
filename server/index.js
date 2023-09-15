@@ -50,7 +50,7 @@ app.get("/", (req, res) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); 
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
-    console.log(req.headers);
+    // console.log(req.headers);
     res.json({ message: "Setup done" })
   });
   

@@ -32,7 +32,7 @@ const UserList = ({ users, loading, error, currentUser, followUser, fetchUsers }
 
   const handleFollow = (userId) => {
     // followUser(userId, currentUser._id);
-    console.log(currUser?._id);
+    // console.log(currUser?._id);
     followUser(userId, currUser?._id);
     setUsersToDisplay((prevUsers) => prevUsers.filter((user) => user._id !== userId));
   };

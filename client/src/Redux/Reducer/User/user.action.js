@@ -93,7 +93,7 @@ export const followUser = (userId) => async (dispatch, getState) => {
   const currentUser = JSON.parse(localStorage.getItem('userObj'));
 
   const currentUserId = currentUser.userId;
-  console.log("red",currentUserId);
+  // console.log("red",currentUserId);
 
   dispatch(followUserRequest());
 

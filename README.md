@@ -89,6 +89,7 @@ MONGODB_URL = ""
 AWS_ACCESS_KEY_ID = ""
 AWS_SECRET_ACCESS_KEY = ""
 ```
+For testing purpose you can use my "MONGODB_URL" url : `mongodb+srv://naveen:naveen-twitter@data.pc7gdvc.mongodb.net/`
 
 ## Page Functionality with Routes
 

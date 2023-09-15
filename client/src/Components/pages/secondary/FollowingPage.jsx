@@ -13,7 +13,7 @@ const FollowingPage = ({ users, loading, error, currentUser, followUser, unfollo
     const fetchCurrUser = async () => {
       const userData = await dispatch(getUserInfo(currentUser.userId));
       setCurrUser(userData);
-      console.log("user",currUser);
+      // console.log("user",currUser);
     };
     
     fetchCurrUser();

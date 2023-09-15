@@ -23,7 +23,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
     // case SIGN_UP:
     //     return { ...state,  };
     case SIGN_UP:
-      console.log(action.payload);
+      // console.log(action.payload);
       localStorage.setItem('userObj', JSON.stringify(action.payload));
       return { ...state, user: action.payload, isLoggedIn: true };
     case SIGN_IN:

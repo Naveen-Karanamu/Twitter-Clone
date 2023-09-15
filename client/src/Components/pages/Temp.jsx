@@ -19,7 +19,7 @@ const userObjString = localStorage.getItem('userObj');
 if (userObjString) {
   const userObj = JSON.parse(userObjString);
 
-  console.log(userObj);
+  // console.log(userObj);
 
   const userId = userObj._id;
   const username = userObj.username;

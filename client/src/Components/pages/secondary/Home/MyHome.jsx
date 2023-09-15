@@ -15,14 +15,14 @@ const MyHome = () => {
     const fetchCurrUser = async () => {
       const userData = await dispatch(getUserInfo(currentUser.userId));
       setCurrUser(userData);
-      console.log("user",JSON.parse(localStorage.getItem('userObj')).userId);
+      // console.log("user",JSON.parse(localStorage.getItem('userObj')).userId);
     };
     
     fetchCurrUser();
   }, [dispatch]);
-  console.log(currUser);
+  // console.log(currUser);
   const followingList = useSelector((state) => currUser.following);
-  console.log(followingList);
+  // console.log(followingList);
   const [tweets, setTweets] = useState([]);
   const [userInfoMap, setUserInfoMap] = useState({});
 

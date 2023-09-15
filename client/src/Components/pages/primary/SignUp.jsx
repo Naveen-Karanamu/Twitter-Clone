@@ -36,7 +36,7 @@ const SignUp = () => {
 
     try {
       const dispatchData = await dispatch(signUp(userData));
-      console.log("Response from signUp:", dispatchData);
+      // console.log("Response from signUp:", dispatchData);
 
       if (dispatchData.status === "registered") {
         history.push("/signin");

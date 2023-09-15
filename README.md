@@ -1,5 +1,12 @@
 # Twitter Clone
 
+### FrontEnd Deployed Link
+`https://twitter-fe-clone.vercel.app/`
+### BackEnd Deployed Link
+`https://twitter-clone-be.vercel.app/`
+
+Ps: There is some Potential CORS error (will fix it), run in your Local for Smooth Functioning.
+
 ## This is the Full Stack Twitter mini Clone built using: 
 * MERN Stack
 * MongoDB as Database

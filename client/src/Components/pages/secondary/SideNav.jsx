@@ -12,7 +12,7 @@ import { logout } from "../../../Redux/Reducer/Auth/auth.action";
 
 const navigationItems = [
   {
-    path: "/home",
+    path: "/home/posts",
     icon: <ImHome3 className="w-6 h-6" />,
     text: "Home",
     key: "home",
@@ -24,7 +24,7 @@ const navigationItems = [
     key: "profile",
   },
   {
-    path: "/people",
+    path: "/people/users",
     icon: <FaUsersLine className="w-6 h-6" />,
     text: "People",
     key: "users",

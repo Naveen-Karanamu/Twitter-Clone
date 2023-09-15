@@ -138,7 +138,7 @@ const ProfilePage = () => {
               </>
             )}
             <div className="my-4">
-              <p className="font-bold text-2xl text-xl">Your Posts</p>
+              <p className="font-bold text-2xl text-blueT-100">Your Posts</p>
             </div>
             {tweets !== null &&
               tweets.map((tweet) => (

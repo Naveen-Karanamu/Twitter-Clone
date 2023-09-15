@@ -1,0 +1,29 @@
+{
+    "AWSEBDockerrunVersion": 2,
+    "containerDefinitions": [
+      {
+        "name": "nginx",
+        "image": "naveen_karanamu/tweet-images-nginx",
+        "hostname": "nginx",
+        "essentials": true,
+        "postMappings": [{ "hostPort": 80, "containerPort": 80 }],
+        "links": ["client", "nodeserver"],
+        "memory": 128
+      },
+      {
+        "name": "client",
+        "image": "naveen_karanamu/tweet-images-nginx",
+        "hostname": "client",
+        "essentials": false,
+        "memory": 300
+      },
+      {
+        "name": "nodeserver",
+        "image": "naveen_karanamu/tweet-images-nginx",
+        "hostname": "nodeserver",
+        "essentials": false,
+        "memory": 300
+      }
+    ]
+  }
+  

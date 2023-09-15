@@ -1,0 +1,12 @@
+FROM node:alpine
+
+WORKDIR ~/app
+
+COPY package*.json ./
+
+RUN yarn i --silent
+
+COPY . .
+
+
+CMD ["yarn", "run", "dev"]

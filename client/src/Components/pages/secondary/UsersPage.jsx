@@ -13,7 +13,7 @@ const UserList = ({ users, loading, error, currentUser, followUser, fetchUsers }
   }, [fetchUsers]);
 
   useEffect(() => {
-    const filteredUsers = users.filter((user) => !currentUser.following.includes(user._id));
+    const filteredUsers = users.filter((user) => !currentUser.following.includes(user._id) && user._id !== currentUser._id);
     setUsersToDisplay(filteredUsers);
   }, [users, currentUser]);
 
@@ -29,6 +29,7 @@ const UserList = ({ users, loading, error, currentUser, followUser, fetchUsers }
   if (!Array.isArray(usersToDisplay)) {
     return <div>No users to display.</div>; 
   }
+  // console.log(currentUser);
 
   return (
     <div className="">

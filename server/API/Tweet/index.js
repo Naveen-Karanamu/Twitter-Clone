@@ -1,6 +1,7 @@
 // Import necessary modules
 import express from "express";
 import passport from "passport";
+import { UserModel } from "../../database/user/index.js";
 import { TweetModel } from "../../database/tweet/index.js";
 
 import mongoose from "mongoose";
@@ -74,6 +75,14 @@ Router.post("/new", async (req, res) => {
     const { content, user } = req.body;
     const tweet = new TweetModel({ content, user });
     await tweet.save();
+    const userToUpdate = await UserModel.findById(user);
+    if (!userToUpdate) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    userToUpdate.tweets.push(tweet._id);
+    await userToUpdate.save();
+
     res.status(201).json(tweet);
   } catch (error) {
     console.error(error);

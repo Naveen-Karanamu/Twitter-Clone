@@ -10,19 +10,33 @@ import { useHistory } from "react-router-dom";
 import tx_image from "../../../assets/images/tx.png";
 import { logout } from "../../../Redux/Reducer/Auth/auth.action";
 
+const navigationItems = [
+  {
+    path: "/home",
+    icon: <ImHome3 className="w-6 h-6" />,
+    text: "Home",
+    key: "home",
+  },
+  {
+    path: "/profile",
+    icon: <FaUserAlt className="w-6 h-6" />,
+    text: "Profile",
+    key: "profile",
+  },
+  {
+    path: "/people",
+    icon: <FaUsersLine className="w-6 h-6" />,
+    text: "People",
+    key: "users",
+  },
+];
+
 const SideNav = () => {
   const [selectedPage, setSelectedPage] = useState("home");
   const [isTweetCardOpen, setIsTweetCardOpen] = useState(false);
 
-  const handleHomeClick = () => {
-    setSelectedPage("home");
-  };
-
-  const handleProfileClick = () => {
-    setSelectedPage("profile");
-  };
-  const handleUsersClick = () => {
-    setSelectedPage("users");
+  const handleItemClick = (key) => {
+    setSelectedPage(key);
   };
 
   const openTweetCard = () => {
@@ -34,57 +48,32 @@ const SideNav = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    history.push("/signin"); 
+    history.push("/signin");
   };
 
   return (
     <>
-      <div className="flex flex-col px-10 gap-1 justify-start items-start mx-6 mt-4 border-r-2 h-screen sticky top-4">
+      <div className="flex flex-col px-10 gap-1 justify-start items-start mx-10 mt-4 border-r-2 h-screen sticky top-4">
         <div className="w-14 h-14">
           <img src={tx_image} alt="logo" />
         </div>
-        <Link
-          to="/home"
-          onClick={handleHomeClick}
-          className={`flex gap-4 justify-center items-center rounded-3xl px-2 py-1 ${
-            selectedPage === "home"
-              ? "text-black-400 font-bold"
-              : "hover:bg-gray-300 text-gray-600"
-          }`}
-        >
-          <div className="flex gap-4 justify-center items-center hover:bg-gray-300 rounded-3xl px-6 py-3">
-            <ImHome3 className="w-6 h-6" />
-            <p className="font-semibold text-xl">Home</p>
-          </div>
-        </Link>
-        <Link
-          to="/profile"
-          onClick={handleProfileClick}
-          className={`flex gap-4 justify-center items-center rounded-3xl px-2 py-1 ${
-            selectedPage === "profile"
-              ? "text-black-400 font-bold"
-              : "hover:bg-gray-300 text-gray-600"
-          }`}
-        >
-          <div className="flex gap-4 justify-center items-center hover:bg-gray-300 rounded-3xl px-6 py-3">
-            <FaUserAlt className="w-6 h-6" />
-            <p className="font-semibold text-xl">Profile</p>
-          </div>
-        </Link>
-        <Link
-          to="/people"
-          onClick={handleUsersClick}
-          className={`flex gap-4 justify-center items-center rounded-3xl px-2 py-1 ${
-            selectedPage === "users"
-              ? "text-black-400 font-bold"
-              : "hover:bg-gray-300 text-gray-600"
-          }`}
-        >
-          <div className="flex gap-4 justify-center items-center hover:bg-gray-300 rounded-3xl px-6 py-3">
-            <FaUsersLine className="w-6 h-6" />
-            <p className="font-semibold text-xl">People</p>
-          </div>
-        </Link>
+        {navigationItems.map((item) => (
+          <Link
+            to={item.path}
+            onClick={() => handleItemClick(item.key)}
+            className={`flex gap-4 justify-center items-center rounded-3xl px-2 py-1 ${
+              selectedPage === item.key
+                ? "text-black-400 font-bold"
+                : "hover:bg-gray-300 text-gray-600"
+            }`}
+            key={item.key}
+          >
+            <div className="flex gap-4 justify-center items-center hover:bg-gray-300 rounded-3xl px-6 py-3">
+              {item.icon}
+              <p className="font-semibold text-xl">{item.text}</p>
+            </div>
+          </Link>
+        ))}
         <div>
           <button
             onClick={handleLogout}

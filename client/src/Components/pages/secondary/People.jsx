@@ -8,11 +8,11 @@ function People() {
 
   return (
     <div>
-      <div className="gap-44 flex justify-between border-b-2 mt-10 pb-5 mb-5">
+      <div className=" gap-44 flex justify-between border-b-2 mt-10 pb-5 mb-5" style={{ width: '500px' }}>
         <div className="w-full">
           <Link
             to={`/people/users`}
-            className={`text-4xl font-bold mt-10 mb-6 pb-4 ${
+            className={`text-4xl font-bold mt-10 mb-6 pb-2 ${
               window.location.pathname.endsWith("/users")
                 ? "text-blueT-100"
                 : "hover:text-black font-semibold"

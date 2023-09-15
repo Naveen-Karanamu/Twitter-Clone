@@ -43,9 +43,9 @@ const HomePage = () => {
 
   return (
     <>
-      <div>
+      <div className="w-full">
         <div className="my-4 flex justify-around">
-          <p className="text-bold text-xl">Posts</p>
+          <p className="text-bold text-xl font-bold">Posts</p>
           <p className="text-bold text-xl">Following</p>
         </div>
         {tweets.map((tweet) => (

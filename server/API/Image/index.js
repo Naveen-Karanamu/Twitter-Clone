@@ -54,6 +54,12 @@ Router.post("/", upload.single("file"), async (req, res) => {
         // upload to s3 and returns the url of the image
         const uploadImage = await s3Upload(bucketOptions);
 
+        const image = new ImageModel({
+            imageURL: uploadImage, 
+          });
+      
+          await image.save();
+
         return res.status(200).json({ uploadImage });
     } catch (error) {
         return res.status(500).json({ error: error.message });

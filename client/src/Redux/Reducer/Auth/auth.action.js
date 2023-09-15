@@ -1,6 +1,5 @@
 import axios from "axios";
 
-// Redus types
 import {
   SIGN_IN,
   SIGN_UP,

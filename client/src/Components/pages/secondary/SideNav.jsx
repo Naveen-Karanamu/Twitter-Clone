@@ -54,9 +54,11 @@ const SideNav = () => {
   return (
     <>
       <div className="flex flex-col px-10 gap-1 justify-start items-start mx-10 mt-4 border-r-2 h-screen sticky top-4">
-        <div className="w-14 h-14">
-          <img src={tx_image} alt="logo" />
-        </div>
+        <Link to="/home/posts">
+          <div className="w-14 h-14">
+            <img src={tx_image} alt="logo" />
+          </div>
+        </Link>
         {navigationItems.map((item) => (
           <Link
             to={item.path}

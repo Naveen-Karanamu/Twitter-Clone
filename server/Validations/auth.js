@@ -2,8 +2,8 @@ import joi from "joi";
 
 export const validateSignUp = (userData) => {
   const Schema = joi.object({
-    username: joi.string().required().min(5),
-    fullname: joi.string().required().min(5),
+    username: joi.string().required().min(3),
+    fullname: joi.string().required().min(3),
     email: joi.string().email().required(),
     password: joi.string().min(5).required(),
     following: joi.array(),
@@ -15,7 +15,7 @@ export const validateSignUp = (userData) => {
 export const validateSignIn = (userData) => {
   const Schema = joi.object({
     email: joi.string().email(),
-    username: joi.string().min(5), 
+    username: joi.string().min(3), 
     password: joi.string().min(5).required(),
   })
   .or('email', 'username') 

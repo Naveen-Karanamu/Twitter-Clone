@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   error: null,
   status: null,
   user: {
-    _id: "650155b70a5ad9b9d13658dd",
+    _id: "6504652299ec91d789879dea",
     username: "naveen",
     fullname: "naveen",
     email: "naveen@gmail.com",
@@ -23,9 +23,11 @@ const authReducer = (state = INITIAL_STATE, action) => {
     // case SIGN_UP:
     //     return { ...state,  };
     case SIGN_UP:
+      localStorage.setItem('userObj', JSON.stringify(action.payload));
       return { ...state, user: action.payload, isLoggedIn: true };
     case SIGN_IN:
       console.log(action.payload);
+      localStorage.setItem('userObj', JSON.stringify(action.payload));
       return { ...state, user: action.payload, isLoggedIn: true };
     case LOGOUT:
       return { ...state, user: null, status: null, isLoggedIn: true };

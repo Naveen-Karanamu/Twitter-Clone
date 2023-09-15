@@ -25,8 +25,12 @@ const TweetComponent = ({
   onDeleteTweet,
   imageURL,
 }) => {
+  const userObjString = localStorage.getItem('userObj');
+  const userObj = JSON.parse(userObjString);
+
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.authReducer.user._id);
+  // const user = useSelector((state) => state.authReducer.user._id);
+  const user = userObj.userId
   const [isEditing, setIsEditing] = useState(false);
   const [tweets, setTweets] = useState(null);
 

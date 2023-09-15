@@ -137,7 +137,7 @@ Method: PUL
 */
 Router.put("/update/:tweetId", async (req, res) => {
   try {
-    const { contenRoutert } = req.body;
+    const { content } = req.body;
     const tweet = await TweetModel.findByIdAndUpdate(
       req.params.tweetId,
       { content },

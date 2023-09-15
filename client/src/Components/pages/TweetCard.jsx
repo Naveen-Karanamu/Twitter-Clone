@@ -38,7 +38,10 @@ const TweetCard = ({ isOpen, setIsOpen }) => {
 
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.authReducer.user._id);
+  const userObjString = localStorage.getItem('userObj');
+  const userObj = JSON.parse(userObjString);
+  // const user = useSelector((state) => state.authReducer.user._id);
+  const user = userObj.userId
 
   const [content, setContent] = useState("");
   const [tweets, setTweets] = useState([]);

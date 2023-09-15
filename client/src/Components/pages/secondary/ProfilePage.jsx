@@ -14,8 +14,13 @@ import { GET_USER_TWEETS_REQUEST } from "../../../Redux/Reducer/Tweet/tweet.type
 import { uploadImage } from "../../../Redux/Reducer/Image/image.action";
 
 const ProfilePage = () => {
+
+  const userObjString = localStorage.getItem('userObj');
+  const userObj = JSON.parse(userObjString);
+
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.authReducer.user._id);
+  // const user = useSelector((state) => state.authReducer.user._id);
+  const user = userObj.userId
   const loading = useSelector((state) => state.authReducer.loading);
   const [tweets, setTweets] = useState(null);
   const [editMode, setEditMode] = useState(false);

@@ -6,9 +6,22 @@ import { getUserInfo } from "../../../../Redux/Reducer/User/user.action";
 import Header from "./Header";
 
 const MyHome = () => {
+  const [currUser, setCurrUser] = useState({_id:"", following:[]});
   const dispatch = useDispatch();
   const tweetsFromState = useSelector((state) => state.tweets);
-  const followingList = useSelector((state) => state.authReducer.user.following);
+  // const followingList = useSelector((state) => state.authReducer.user.following);
+  const currentUser=JSON.parse(localStorage.getItem('userObj'))
+  useEffect(() => {
+    const fetchCurrUser = async () => {
+      const userData = await dispatch(getUserInfo(currentUser.userId));
+      setCurrUser(userData);
+      console.log("user",JSON.parse(localStorage.getItem('userObj')).userId);
+    };
+    
+    fetchCurrUser();
+  }, [dispatch]);
+  console.log(currUser);
+  const followingList = useSelector((state) => currUser.following);
   console.log(followingList);
   const [tweets, setTweets] = useState([]);
   const [userInfoMap, setUserInfoMap] = useState({});

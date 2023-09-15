@@ -41,7 +41,7 @@ const SignIn = ({ isOpen, setIsOpen }) => {
     );
 
     dispatchData.status === "registered"
-      ? history.push("/home")
+      ? history.push("/home/posts")
       : alert(dispatchData.payload.response.data.error);
   };
 

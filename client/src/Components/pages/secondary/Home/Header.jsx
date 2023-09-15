@@ -7,7 +7,7 @@ const Header = () => {
       <div className="w-full">
         <Link
           to={`/home/posts`}
-          className={`text-3xl font-bold mt-10 mb-6 pb-2 ${
+          className={`text-2xl font-bold mt-10 mb-6 pb-2 ${
             window.location.pathname.endsWith("/posts")
               ? "text-blueT-100"
               : "hover:text-black font-semibold"
@@ -19,7 +19,7 @@ const Header = () => {
       <div className="w-full">
         <Link
           to={`/home/followtweets`}
-          className={`text-3xl font-bold mt-10 mb-6 pb-4 ${
+          className={`text-2xl font-bold mt-10 mb-6 pb-4 ${
             window.location.pathname.endsWith("/followtweets")
               ? "text-blueT-100"
               : "hover:text-black font-semibold"

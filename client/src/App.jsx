@@ -33,6 +33,7 @@ function App() {
           <Route path="/people/following" exact component={FollowingPage} />
           <Route path="/feed" exact component={FeedComponent} />
           <Route path="/temp" exact component={Temp} />
+          <FeedComponent />
         </div>
       </Switch>
     </>

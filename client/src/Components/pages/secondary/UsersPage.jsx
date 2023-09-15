@@ -1,24 +1,39 @@
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import { fetchUsers, followUser } from "../../../Redux/Reducer/User/user.action";
+import { connect, useDispatch } from "react-redux";
+import { fetchUsers, followUser, getUserInfo } from "../../../Redux/Reducer/User/user.action";
 import SideNav from "./SideNav";
 import { FaUserCircle } from "react-icons/fa";
 import People from "./People";
 
 const UserList = ({ users, loading, error, currentUser, followUser, fetchUsers }) => {
   const [usersToDisplay, setUsersToDisplay] = useState([]);
+  const [currUser, setCurrUser] = useState({_id:"", following:[]});
+  
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const fetchCurrUser = async () => {
+      const userData = await dispatch(getUserInfo(currentUser.userId));
+      setCurrUser(userData);
+    };
+    
+    fetchCurrUser();
+  }, [dispatch]);
+  
 
   useEffect(() => {
     fetchUsers();
   }, [fetchUsers]);
 
   useEffect(() => {
-    const filteredUsers = users.filter((user) => !currentUser.following.includes(user._id) && user._id !== currentUser._id);
+    // const filteredUsers = users.filter((user) => !currentUser.following.includes(user._id) && user._id !== currentUser._id);
+    const filteredUsers = users.filter((user) => !currUser.following.includes(user._id) && user._id !== currUser._id);
     setUsersToDisplay(filteredUsers);
-  }, [users, currentUser]);
+  }, [users, currUser]);
 
   const handleFollow = (userId) => {
-    followUser(userId, currentUser._id);
+    // followUser(userId, currentUser._id);
+    console.log(currUser._id);
+    followUser(userId, currUser._id);
     setUsersToDisplay((prevUsers) => prevUsers.filter((user) => user._id !== userId));
   };
 
@@ -68,7 +83,8 @@ const mapStateToProps = (state) => ({
   users: state.userReducer.users,
   loading: state.userReducer.loading,
   error: state.userReducer.error,
-  currentUser: state.authReducer.user,
+  // currentUser: state.authReducer.user,
+  currentUser: JSON.parse(localStorage.getItem('userObj')) ,
 });
 
 const mapDispatchToProps = {

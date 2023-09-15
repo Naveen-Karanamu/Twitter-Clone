@@ -73,15 +73,18 @@ Method: POST
 // });
 Router.post('/follow/:userId', async (req, res) => {
   const { userId } = req.params;
-  const { user } = req.body; // Assuming you have user authentication middleware to get the current user
+  const { user } = req.body; 
 
   try {
     const currentUser = await UserModel.findById(user._id);
     const targetUser = await UserModel.findById(userId);
     // console.log(user._id);
 
-    if (!currentUser || !targetUser) {
-      return res.status(404).json({ error: 'User not found' });
+    if (!currentUser ) {
+      return res.status(404).json({ error: 'Current User not found' });
+    }
+    if (!targetUser) {
+      return res.status(404).json({ error: 'Target User not found' });
     }
 
     // Check if the current user is already following the target user

@@ -39,7 +39,7 @@ const SignUp = () => {
       console.log("Response from signUp:", dispatchData);
 
       if (dispatchData.status === "registered") {
-        history.push("/home");
+        history.push("/home/posts");
       } else {
         alert("An error occurred during sign-up. Please try again.");
       }
